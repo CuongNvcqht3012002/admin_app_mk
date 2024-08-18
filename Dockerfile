@@ -5,18 +5,18 @@ WORKDIR /app
 
 COPY package*.json .
 
-RUN npm install --legacy-peer-deps
+RUN npm i --legacy-peer-deps
 
 COPY . .
 
 RUN npm run build
 
 # deploy stage
-FROM node:18.15.0-alpine AS deploy
+FROM nginx:alpine
 
 WORKDIR /app
 
 COPY --from=build /app/build .
-COPY .env.prod .env.dev package.json ./
+COPY nginx.conf /etc/nginx/conf.d/default.conf
 
-CMD ["yarn", "start"]
+CMD ["nginx", "-g", "daemon off;"]
