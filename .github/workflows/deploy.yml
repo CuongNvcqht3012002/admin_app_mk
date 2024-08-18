@@ -1,0 +1,25 @@
+name: Deploy
+
+on:
+  push:
+    branches: []
+  pull_request:
+    branches: []
+
+jobs:
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+    steps:
+      - uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.VM_HOST }}
+          port: ${{ secrets.VM_PORT }}
+          username: ${{ secrets.VM_USERNAME }}
+          password: ${{ secrets.VM_PASSWORD }}
+          script: |
+            cd /home/admin_app_mk
+            git checkout main
+            git pull
+            docker compose up -d --build
+            exit
