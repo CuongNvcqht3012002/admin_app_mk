@@ -12,11 +12,10 @@ COPY . .
 RUN npm run build
 
 # deploy stage
-FROM nginx:alpine
+FROM node:18.15.0-alpine AS deploy
 
 WORKDIR /app
 
 COPY --from=build /app/build .
-COPY nginx.conf /etc/nginx/conf.d/default.conf
 
-CMD ["nginx", "-g", "daemon off;"]
+CMD ["yarn", "start"]

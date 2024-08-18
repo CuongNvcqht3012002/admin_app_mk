@@ -3,4 +3,4 @@ services:
   admin-mk:
     build: .
     ports:
-      - 6870:80
+      - ${PORT}:${PORT}
