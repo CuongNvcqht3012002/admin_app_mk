@@ -17,5 +17,6 @@ FROM node:18.15.0-alpine AS deploy
 WORKDIR /app
 
 COPY --from=build /app/build .
+COPY .env.prod package.json ./
 
 CMD ["yarn", "start"]
