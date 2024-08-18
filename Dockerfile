@@ -5,7 +5,7 @@ WORKDIR /app
 
 COPY package*.json .
 
-RUN npm i --legacy-peer-deps
+RUN npm install --legacy-peer-deps
 
 COPY . .
 
@@ -17,6 +17,6 @@ FROM node:18.15.0-alpine AS deploy
 WORKDIR /app
 
 COPY --from=build /app/build .
-COPY .env.prod package.json ./
+COPY .env.prod .env.dev package.json ./
 
 CMD ["yarn", "start"]
